@@ -97,7 +97,7 @@ def load_stream(input_stream, agg_value_key, agg_key_value):
                 yield DataPoint(Decimal(clean_line), 1)
         except:
             logging.exception('failed %r', line)
-            print >>sys.stderr, "invalid line %r" % line
+            print("invalid line %r" % line, file=sys.stderr)
 
 
 def median(values, key=None):
@@ -111,7 +111,7 @@ def median(values, key=None):
 
     values = sorted(values, key=key)
     return sum(map(key,
-                   [values[i] for i in median_indeces])) / len(median_indeces)
+                   [values[int(i)] for i in median_indeces])) / len(median_indeces)
 
 
 def test_median():
@@ -241,7 +241,7 @@ def histogram(stream, options):
         print("# Mean = %f; Variance = %f; SD = %f; Median %f" %
               (mvsd.mean(), mvsd.var(), mvsd.sd(),
                median(accepted_data, key=lambda x: x.value)))
-    print "# each " + options.dot + " represents a count of %d" % bucket_scale
+    print("# each " + options.dot + " represents a count of %d" % bucket_scale)
     bucket_min = min_v
     bucket_max = min_v
     percentage = ""
@@ -252,12 +252,11 @@ def histogram(stream, options):
         bucket_count = bucket_counts[bucket]
         star_count = 0
         if bucket_count:
-            star_count = bucket_count / bucket_scale
+            star_count = bucket_count // bucket_scale
         if options.percentage:
             percentage = " (%0.2f%%)" % (100 * Decimal(bucket_count) /
                                          Decimal(samples))
-        print format_string % (bucket_min, bucket_max, bucket_count, options.dot *
-                               star_count, percentage)
+        print(format_string % (bucket_min, bucket_max, bucket_count, options.dot * star_count, percentage))
 
 
 if __name__ == "__main__":
@@ -294,7 +293,7 @@ if __name__ == "__main__":
     if sys.stdin.isatty():
         # if isatty() that means it's run without anything piped into it
         parser.print_usage()
-        print "for more help use --help"
+        print("for more help use --help")
         sys.exit(1)
     histogram(load_stream(sys.stdin, options.agg_value_key,
                           options.agg_key_value), options)
