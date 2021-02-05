@@ -252,11 +252,11 @@ def histogram(stream, options):
         bucket_count = bucket_counts[bucket]
         star_count = 0
         if bucket_count:
-            star_count = bucket_count / bucket_scale
+            star_count = bucket_count // bucket_scale
         if options.percentage:
             percentage = " (%0.2f%%)" % (100 * Decimal(bucket_count) /
                                          Decimal(samples))
-        print(format_string % (bucket_min, bucket_max, bucket_count, options.dot * int(star_count), percentage))
+        print(format_string % (bucket_min, bucket_max, bucket_count, options.dot * star_count, percentage))
 
 
 if __name__ == "__main__":
