@@ -111,7 +111,7 @@ def median(values, key=None):
 
     values = sorted(values, key=key)
     return sum(map(key,
-                   [values[i] for i in median_indeces])) / len(median_indeces)
+                   [values[int(i)] for i in median_indeces])) / len(median_indeces)
 
 
 def test_median():
@@ -256,8 +256,7 @@ def histogram(stream, options):
         if options.percentage:
             percentage = " (%0.2f%%)" % (100 * Decimal(bucket_count) /
                                          Decimal(samples))
-        print(format_string % (bucket_min, bucket_max, bucket_count, options.dot *
-                               star_count, percentage))
+        print(format_string % (bucket_min, bucket_max, bucket_count, options.dot * int(star_count), percentage))
 
 
 if __name__ == "__main__":
