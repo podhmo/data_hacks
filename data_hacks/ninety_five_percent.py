@@ -37,7 +37,7 @@ def run():
             count +=1
             data[t] = data.get(t, 0) + 1
         except:
-            print >>sys.stderr, "invalid line %r" % line
+            print("invalid line %r" % line, file=sys.stderr) 
     print calc_95(data, count)
         
 def calc_95(data, count):
@@ -54,6 +54,6 @@ def calc_95(data, count):
 
 if __name__ == "__main__":
     if sys.stdin.isatty() or '--help' in sys.argv or '-h' in sys.argv:
-        print "Usage: cat data | %s" % os.path.basename(sys.argv[0])
+        print("Usage: cat data | %s" % os.path.basename(sys.argv[0]))
         sys.exit(1)
     run()
